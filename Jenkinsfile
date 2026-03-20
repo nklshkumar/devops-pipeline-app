@@ -9,13 +9,23 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'docker run --rm -v $PWD:/workspace -w /workspace/app node:18 npm install'
+                sh '''
+                docker run --rm \
+                --volumes-from jenkins \
+                -w /var/jenkins_home/workspace/devops-pipeline/app \
+                node:18 npm install
+                '''
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'docker run --rm -v $PWD:/workspace -w /workspace/app node:18 npm test'
+                sh '''
+                docker run --rm \
+                --volumes-from jenkins \
+                -w /var/jenkins_home/workspace/devops-pipeline/app \
+                node:18 npm test
+                '''
             }
         }
 
