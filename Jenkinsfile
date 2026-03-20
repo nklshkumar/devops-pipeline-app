@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:18'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
 
     environment {
         IMAGE_NAME = "devops-app"
@@ -14,13 +9,13 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'cd app && npm install'
+                sh 'docker run --rm -v $PWD/app:/app -w /app node:18 npm install'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'cd app && npm test'
+                sh 'docker run --rm -v $PWD/app:/app -w /app node:18 npm test'
             }
         }
 
