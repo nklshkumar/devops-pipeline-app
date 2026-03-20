@@ -7,12 +7,6 @@ pipeline {
 
     stages {
 
-        stage('Clone Code') {
-            steps {
-                git url: '<YOUR_GITHUB_REPO_URL>', branch: 'main'
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
                 sh 'cd app && npm install'
